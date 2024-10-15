@@ -18,11 +18,11 @@ class Produto {
     }
     
     // Método para adicionar um novo produto
-    public function adicionarAluno($id_aluno, $nome, $email) {
+    public function adicionarAluno( $nome, $email) {
         $sql = "INSERT INTO alunos (id, nome, email) VALUES (?, ?, ?)";
         
         if ($stmt = $this->conn->prepare($sql)) {
-            $stmt->bind_param("ssdi", $id_aluno, $nome, $email);
+            $stmt->bind_param("ssdi", $nome, $email);
             if ($stmt->execute()) {
                 echo "Aluno adicionado com sucesso!";
             } else {
@@ -40,22 +40,22 @@ class Produto {
         $result = $this->conn->query($sql);
 
         if ($result->num_rows > 0) {
-            $id_aluno = [];
+            $alunos = [];
             while ($row = $result->fetch_assoc()) {
-                $id_aluno[] = $row;
+                $alunos[] = $row;
             }
-            return $id_aluno;
+            return $alunos;
         } else {
             return [];
         }
     }
 
     // Método para alterar um aluno
-    public function alterarAluno($id_aluno, $nome, $email) {
-        $sql = "UPDATE alunos SET id_aluno = ?, nome = ?, email = ? WHERE id = ?";
+    public function alterarAluno( $nome, $email) {
+        $sql = "UPDATE alunos SET nome = ?, email = ? WHERE id = ?";
         
         if ($stmt = $this->conn->prepare($sql)) {
-            $stmt->bind_param("ssdii",$id_aluno, $nome, $email, $id);
+            $stmt->bind_param("ssdii", $email, $id);
             if ($stmt->execute()) {
                 echo "Aluno atualizado com sucesso!";
             } else {

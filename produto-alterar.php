@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
     $aluno = $aluno->listarAluno();
     $alunoAlvo = null;
 
-    foreach ($produtos as $p) {
+    foreach ($alunos as $p) {
         if ($p['id'] == $id) {
             $alunoAlvo = $p;
             break;
@@ -23,11 +23,11 @@ if (isset($_GET['id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_aluno = $_POST['id'];
+    $alunos = $_POST['id'];
     $nome = $_POST['nome'];
     $email = $_POST['descricao'];
 
-    $produtos->alterarProduto($id_aluno, $nome, $email);
+    $alunos->alterarProduto($nome, $email);
     header("Location: listar_produtos.php");
 }
 ?>

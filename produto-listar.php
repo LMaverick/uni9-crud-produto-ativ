@@ -3,10 +3,10 @@
 require_once 'db.php';
 
 // Instanciar a classe Produto
-$produto = new Produto();
+$aluno = new Aluno();
 
 // Listar os produtos
-$produtos = $produto->listarProdutos();
+$alunos = $aluno->listarProdutos();
 
 ?>
 
@@ -16,7 +16,7 @@ $produtos = $produto->listarProdutos();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Produtos</title>
+    <title>Lista de Alunos</title>
     <style>
         table {
             width: 100%;
@@ -37,7 +37,7 @@ $produtos = $produto->listarProdutos();
 <body>
     <h1>Lista de Produtos</h1>
 
-    <?php if (count($produtos) > 0): ?>
+    <?php if (count($alunos) > 0): ?>
         <table>
             <thead>
                 <tr>
@@ -49,13 +49,11 @@ $produtos = $produto->listarProdutos();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($produtos as $produto): ?>
+                <?php foreach ($alunos as $aluno): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($produto['id']); ?></td>
-                        <td><?php echo htmlspecialchars($produto['nome']); ?></td>
-                        <td><?php echo htmlspecialchars($produto['descricao']); ?></td>
-                        <td><?php echo htmlspecialchars(number_format($produto['preco'], 2, ',', '.')); ?></td>
-                        <td><?php echo htmlspecialchars($produto['quantidade']); ?></td>
+                        <td><?php echo htmlspecialchars($aluno['id']); ?></td>
+                        <td><?php echo htmlspecialchars($aluno['nome']); ?></td>
+                        <td><?php echo htmlspecialchars($aluno['email']); ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

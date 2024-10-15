@@ -1,26 +1,24 @@
 <?php
 // Importa a classe Produto
 require_once 'db.php';
-$produtoCadastrado = false;
+$alunoCadastrado = false;
 
 // Verifica se a requisição é do tipo POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Pega os dados enviados pelo formulário
     $nome = $_POST['nome'];
-    $descricao = $_POST['descricao'];
-    $preco = $_POST['preco'];
-    $quantidade = $_POST['quantidade'];
+    $email = $_POST['descricao'];
 
     // Criar uma nova instância da classe Produto
-    $produto = new Produto();
+    $aluno = new Aluno();
 
     // Adicionar o novo produto no banco de dados
-    $produto->adicionarProduto($nome, $descricao, $preco, $quantidade);
+    $aluno->adicionarProduto($nome, $email);
 
     // Fechar a conexão
-    $produto->fecharConexao();
+    $aluno->fecharConexao();
 
-    $produtoCadastrado = true;
+    $alunoCadastrado = true;
 
     // Redirecionar para a página de listagem ou exibir uma mensagem de sucesso
     echo "Produto adicionado com sucesso!";
@@ -39,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <?php
-    if($produtoCadastrado){
+    if($alunoCadastrado){
         echo '<div class="container mt-5">
             <div class="alert alert-success" role="alert">
                 Produto adicionado com sucesso!
