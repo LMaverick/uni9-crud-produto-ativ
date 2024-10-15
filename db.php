@@ -2,8 +2,8 @@
 
 class Produto {
     private $conn;   
-    private $host = "65.108.237.84";
-    private $db = "prog_web";
+    private $host = "mysql.jrcf.dev";
+    private $db = "escola";
     private $user = "usrapp";
     private $pass = "010203";
     
@@ -18,15 +18,15 @@ class Produto {
     }
     
     // Método para adicionar um novo produto
-    public function adicionarProduto($nome, $descricao, $preco, $quantidade) {
-        $sql = "INSERT INTO produtos (nome, descricao, preco, quantidade) VALUES (?, ?, ?, ?)";
+    public function adicionarAluno($id_aluno, $nome, $email) {
+        $sql = "INSERT INTO alunos (id, nome, email) VALUES (?, ?, ?)";
         
         if ($stmt = $this->conn->prepare($sql)) {
-            $stmt->bind_param("ssdi", $nome, $descricao, $preco, $quantidade);
+            $stmt->bind_param("ssdi", $id_aluno, $nome, $email);
             if ($stmt->execute()) {
-                echo "Produto adicionado com sucesso!";
+                echo "Aluno adicionado com sucesso!";
             } else {
-                echo "Erro ao adicionar o produto: " . $this->conn->error;
+                echo "Erro ao adicionar o Aluno: " . $this->conn->error;
             }
             $stmt->close();
         } else {
@@ -34,28 +34,28 @@ class Produto {
         }
     }
 
-    // Método para listar todos os produtos
-    public function listarProdutos() {
-        $sql = "SELECT * FROM produtos";
+    // Método para listar todos os Alunos
+    public function listarAlunos() {
+        $sql = "SELECT * FROM alunos";
         $result = $this->conn->query($sql);
 
         if ($result->num_rows > 0) {
-            $produtos = [];
+            $id_aluno = [];
             while ($row = $result->fetch_assoc()) {
-                $produtos[] = $row;
+                $id_aluno[] = $row;
             }
-            return $produtos;
+            return $id_aluno;
         } else {
             return [];
         }
     }
 
-    // Método para alterar um produto
-    public function alterarProduto($id, $nome, $descricao, $preco, $quantidade) {
-        $sql = "UPDATE produtos SET nome = ?, descricao = ?, preco = ?, quantidade = ? WHERE id = ?";
+    // Método para alterar um aluno
+    public function alterarAluno($id_aluno, $nome, $email) {
+        $sql = "UPDATE alunos SET id_aluno = ?, nome = ?, email = ? WHERE id = ?";
         
         if ($stmt = $this->conn->prepare($sql)) {
-            $stmt->bind_param("ssdii", $nome, $descricao, $preco, $quantidade, $id);
+            $stmt->bind_param("ssdii",$id_aluno, $nome, $email, $id);
             if ($stmt->execute()) {
                 echo "Produto atualizado com sucesso!";
             } else {
@@ -68,15 +68,15 @@ class Produto {
     }
 
     // Método para excluir um produto
-    public function excluirProduto($id) {
+    public function excluirAluno($id) {
         $sql = "DELETE FROM produtos WHERE id = ?";
         
         if ($stmt = $this->conn->prepare($sql)) {
             $stmt->bind_param("i", $id);
             if ($stmt->execute()) {
-                echo "Produto excluído com sucesso!";
+                echo "Aluno Descadastrado com sucesso!";
             } else {
-                echo "Erro ao excluir o produto: " . $this->conn->error;
+                echo "Erro ao Descadastrar o Aluno: " . $this->conn->error;
             }
             $stmt->close();
         } else {
