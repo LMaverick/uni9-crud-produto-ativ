@@ -57,9 +57,9 @@ class Produto {
         if ($stmt = $this->conn->prepare($sql)) {
             $stmt->bind_param("ssdii",$id_aluno, $nome, $email, $id);
             if ($stmt->execute()) {
-                echo "Produto atualizado com sucesso!";
+                echo "Aluno atualizado com sucesso!";
             } else {
-                echo "Erro ao atualizar o produto: " . $this->conn->error;
+                echo "Erro ao atualizar o Aluno: " . $this->conn->error;
             }
             $stmt->close();
         } else {
@@ -69,7 +69,7 @@ class Produto {
 
     // Método para excluir um produto
     public function excluirAluno($id) {
-        $sql = "DELETE FROM produtos WHERE id = ?";
+        $sql = "DELETE FROM alunos WHERE id = ?";
         
         if ($stmt = $this->conn->prepare($sql)) {
             $stmt->bind_param("i", $id);

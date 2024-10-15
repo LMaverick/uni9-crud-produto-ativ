@@ -1,6 +1,6 @@
 <?php
 // Incluir a classe Produto
-require_once 'produto.php';
+require_once 'db.php';
 
 // Instanciar a classe Produto
 $produto = new Produto();

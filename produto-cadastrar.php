@@ -1,6 +1,6 @@
 <?php
 // Importa a classe Produto
-require_once 'produto.php';
+require_once 'db.php';
 $produtoCadastrado = false;
 
 // Verifica se a requisição é do tipo POST
