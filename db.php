@@ -51,15 +51,15 @@ class Produto {
     }
 
     // Método para alterar um aluno
-    public function alterarAluno( $nome, $email) {
+    public function alterarAluno($id, $nome, $email) {
         $sql = "UPDATE alunos SET nome = ?, email = ? WHERE id = ?";
         
         if ($stmt = $this->conn->prepare($sql)) {
-            $stmt->bind_param("ssdii", $email, $id);
+            $stmt->bind_param("ssdii", $nome,$email,$id);
             if ($stmt->execute()) {
-                echo "Aluno atualizado com sucesso!";
+                echo "aluno atualizado com sucesso!";
             } else {
-                echo "Erro ao atualizar o Aluno: " . $this->conn->error;
+                echo "Erro ao atualizar o aluno: " . $this->conn->error;
             }
             $stmt->close();
         } else {
@@ -70,6 +70,7 @@ class Produto {
     // Método para excluir um produto
     public function excluirAluno($id) {
         $sql = "DELETE FROM alunos WHERE id = ?";
+      
         
         if ($stmt = $this->conn->prepare($sql)) {
             $stmt->bind_param("i", $id);
@@ -84,9 +85,88 @@ class Produto {
         }
     }
 
+
+
+    public function adicionarDiciplina($nome, $carga_horaria){
+
+        $sql = "INSERT INTO disciplinas(nome,carga_horaria) VALUES (?,?)";
+    
+    
+        if ($stmt = $this->conn->prepare($sql)) {
+            $stmt->bind_param("ssdi", $nome, $carga_horaria);
+            if ($stmt->execute()) {
+                echo "Disciplina adicionada com sucesso!";
+            } else {
+                echo "Erro ao adicionar a disciplina: " . $this->conn->error;
+            }
+            $stmt->close();
+        } else {
+            echo "Erro ao preparar a consulta: " . $this->conn->error;
+        }
+    }
+    
+
+    public function listarDisciplinas() {
+        $sql = "SELECT * FROM disciplinas";
+        $result = $this->conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $disciplinas = [];
+            while ($row = $result->fetch_assoc()) {
+                $disciplinas[] = $row;
+            }
+            return $disciplinas;
+        } else {
+            return [];
+        }
+    }
+
+
+    public function alterarDisciplina($id, $nome, $carga_horaria) {
+        $sql = "UPDATE disciplinas SET nome = ?,carga_horaria = ? WHERE id = ?";
+        
+        if ($stmt = $this->conn->prepare($sql)) {
+            $stmt->bind_param("ssdii", $nome,$carga_horaria,$id);
+            if ($stmt->execute()) {
+                echo "Disciplina atualizada com sucesso!";
+            } else {
+                echo "Erro ao atualizar a Disciplina: " . $this->conn->error;
+            }
+            $stmt->close();
+        } else {
+            echo "Erro ao preparar a consulta: " . $this->conn->error;
+        }
+    }
+
+
+
+    public function excluirDisciplina($id) {
+        $sql = "DELETE FROM disciplinas WHERE id = ?";
+      
+        
+        if ($stmt = $this->conn->prepare($sql)) {
+            $stmt->bind_param("i", $id);
+            if ($stmt->execute()) {
+                echo "disciplina Descadastrada com sucesso!";
+            } else {
+                echo "Erro ao Descadastrar a Disciplina: " . $this->conn->error;
+            }
+            $stmt->close();
+        } else {
+            echo "Erro ao preparar a consulta: " . $this->conn->error;
+        }
+    }
+
     // Fechar a conexão com o banco de dados
     public function fecharConexao() {
         $this->conn->close();
     }
+
+
+   
+
 }
+
+
+
 ?>
