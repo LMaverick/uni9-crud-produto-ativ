@@ -1,34 +1,28 @@
 <?php
 require_once 'db.php';
 
-$aluno = new aluno();
+$alunoObj = new Aluno(); // Instância da classe Aluno
 
 // Verificar se o ID foi enviado e se o formulário foi submetido
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $aluno = $aluno->listarAluno();
-    $alunoAlvo = null;
-
-    foreach ($alunos as $p) {
-        if ($p['id'] == $id) {
-            $alunoAlvo = $p;
-            break;
-        }
-    }
+    $alunoAlvo = $alunoObj->buscarAlunoPorId($id); // Buscar o aluno pelo ID
 
     if (!$alunoAlvo) {
-        echo "Produto não encontrado!";
+        echo "Aluno não encontrado!";
         exit;
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $alunos = $_POST['id'];
+    $id = $_POST['id'];
     $nome = $_POST['nome'];
-    $email = $_POST['descricao'];
+    $email = $_POST['email'];
 
-    $alunos->alterarProduto($nome, $email);
-    header("Location: listar_produtos.php");
+    // Chamar o método para alterar o aluno
+    $alunoObj->alterarAluno($id, $nome, $email);
+    header("Location: aluno-listar.php"); // Redirecionar para a lista de alunos
+    exit;
 }
 ?>
 
@@ -47,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h1 class="text-center mb-4">Alterar Aluno</h1>
 
     <form method="POST" class="row g-3">
-        <input type="hidden" name="id" value="<?php echo $alunoAlvo['id']; ?>">
+        <input type="hidden" name="id" value="<?php echo htmlspecialchars($alunoAlvo['id']); ?>">
 
         <div class="col-md-6">
             <label for="nome" class="form-label">Nome:</label>
@@ -55,18 +49,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="col-md-6">
-            <label for="email" class="form-label">Descrição:</label>
-            <input type="text" name="email" class="form-control" value="<?php echo htmlspecialchars($alunoAlvo['email']); ?>" required>
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($alunoAlvo['email']); ?>" required>
         </div>
-
-
 
         <div class="col-12">
             <button type="submit" class="btn btn-primary w-100">Salvar Alterações</button>
         </div>
 
         <div class="col-12 text-center">
-            <a href="listar_produtos.php" class="btn btn-secondary mt-3">Voltar à Lista</a>
+            <a href="aluno-listar.php" class="btn btn-secondary mt-3">Voltar à Lista</a>
         </div>
     </form>
 </div>

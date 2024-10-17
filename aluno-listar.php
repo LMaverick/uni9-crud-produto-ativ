@@ -1,15 +1,3 @@
-<?php
-// Incluir a classe Produto
-require_once 'db.php';
-
-// Instanciar a classe Produto
-$aluno = new Aluno();
-
-// Listar os produtos
-$alunos = $aluno->listarProdutos();
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -35,31 +23,40 @@ $alunos = $aluno->listarProdutos();
     </style>
 </head>
 <body>
-    <h1>Lista de Produtos</h1>
+    <h1>Lista de Alunos</h1>
 
-    <?php if (count($alunos) > 0): ?>
+    <?php
+    // Incluir o arquivo com a classe Escola
+    require_once 'db.php';
+    $escola = new Escola();
+    $alunos = $escola->listarAlunos();
+
+    if (count($alunos) > 0): ?>
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Preço</th>
-                    <th>Quantidade</th>
+                    <th>Email</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($alunos as $aluno): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($aluno['id']); ?></td>
-                        <td><?php echo htmlspecialchars($aluno['nome']); ?></td>
+                        <td>
+                            <!-- Nome do aluno como link -->
+                            <a href="aluno-detalhes.php?id=<?php echo $aluno['id']; ?>">
+                                <?php echo htmlspecialchars($aluno['nome']); ?>
+                            </a>
+                        </td>
                         <td><?php echo htmlspecialchars($aluno['email']); ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     <?php else: ?>
-        <p>Nenhum produto encontrado.</p>
+        <p>Nenhum aluno encontrado.</p>
     <?php endif; ?>
 </body>
 </html>
