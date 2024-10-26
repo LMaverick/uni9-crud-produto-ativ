@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $carga_horaria = $_POST['carga_horaria'];
 
     // Criar uma nova instância da classe Disciplina
-    $disciplina = new Disciplina();
+    $disciplina = new Escola();
 
     // Adicionar a nova disciplina no banco de dados
     $disciplina->adicionarDisciplina($nome, $carga_horaria);

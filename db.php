@@ -2,10 +2,10 @@
 
 class Escola {
     private $conn;   
-    private $host = "mysql.jrcf.dev";
-    private $db = "escola";
-    private $user = "usrapp";
-    private $pass = "010203";
+    private $host = 'mysql.jrcf.dev';
+    private $db = 'escola';
+    private $user = 'usrapp';
+    private $pass = '010203';
     
     public function __construct() {
        

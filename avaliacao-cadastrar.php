@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data_avaliacao = $_POST['data_avaliacao'];
 
     // Criar uma nova instância da classe Avaliacao
-    $avaliacao = new Avaliacao();
+    $avaliacao = new Escola();
 
     // Adicionar a nova avaliação no banco de dados
     $avaliacao->adicionarAvaliacao($id_aluno, $id_disciplina, $nota, $data_avaliacao);

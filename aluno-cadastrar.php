@@ -10,15 +10,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
 
     // Criar uma nova instância da classe Aluno
-    $aluno = new Aluno();
+    $escola = new Escola();
 
     // Adicionar o novo aluno no banco de dados
-    $aluno->adicionarAluno($nome, $email);
+    $escola->adicionarAluno($nome, $email);
 
     // Fechar a conexão
-    $aluno->fecharConexao();
+    $escola->fecharConexao();
 
     $alunoCadastrado = true;
+
+    echo "Produto adicionado com sucesso!";
 }
 ?>
 <!DOCTYPE html>
