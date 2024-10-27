@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-    <h1>Lista de Alunos</h1>
+    <h1>Lista de Avaliações</h1>
 
     <?php
     // Incluir o arquivo com a classe Escola
@@ -61,7 +61,7 @@
             </tbody>
         </table>
     <?php else: ?>
-        <p>Nenhum aluno encontrado.</p>
+        <p>Nenhuma avaliação encontrada.</p>
     <?php endif; ?>
 </body>
 </html>

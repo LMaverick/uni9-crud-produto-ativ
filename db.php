@@ -49,6 +49,29 @@ class Escola {
         }
     }
 
+
+    public function buscarAlunoPorId($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM alunos WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $aluno = $resultado->fetch_assoc();
+        $stmt->close();
+
+        return $aluno; // Retorna os dados do aluno ou null se não encontrado
+    }
+
+    // Método para atualizar o nome e o email do aluno pelo ID
+    public function atualizarAluno($id, $nome, $email) {
+        $stmt = $this->conn->prepare("UPDATE alunos SET nome = ?, email = ? WHERE id = ?");
+        $stmt->bind_param("ssi", $nome, $email, $id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+
+
+
     public function adicionarDisciplina($nome, $carga_horaria) {
         $sql = "INSERT INTO disciplinas (nome, carga_horaria) VALUES (?, ?)";
         
@@ -79,6 +102,26 @@ class Escola {
         } else {
             return [];
         }
+    }
+
+
+    public function buscarDisciplinaPorId($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM disciplinas WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $disciplina = $resultado->fetch_assoc();
+        $stmt->close();
+
+        return $disciplina; // Retorna os dados da disciplina ou null se não encontrado
+    }
+
+    // Método para atualizar os dados da disciplina
+    public function atualizarDisciplina($id, $nome, $carga_horaria) {
+        $stmt = $this->conn->prepare("UPDATE disciplinas SET nome = ?, carga_horaria = ? WHERE id = ?");
+        $stmt->bind_param("ssi", $nome, $carga_horaria, $id);
+        $stmt->execute();
+        $stmt->close();
     }
 
     
@@ -139,6 +182,33 @@ class Escola {
         }
     }
 
+
+
+    public function buscarAvaliacaoPorId($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM avaliacoes WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $avaliacao = $resultado->fetch_assoc();
+        $stmt->close();
+
+        return $avaliacao;
+    }
+
+    // Método para atualizar uma avaliação existente
+    public function atualizarAvaliacao($id, $id_aluno, $id_disciplina, $nota, $data_avaliacao) {
+        $stmt = $this->conn->prepare("UPDATE avaliacoes SET aluno_id = ?, disciplina_id = ?,nota = ?,data_avaliacao = ? WHERE id = ?");
+        $stmt->bind_param("iidsi", $id_aluno, $id_disciplina, $nota, $data_avaliacao, $id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+       
+    
+
+
+    
+
     public function excluirAluno($id) {
         $sql = "DELETE FROM alunos WHERE id = ?";
         
@@ -165,6 +235,22 @@ class Escola {
                 echo "Disciplina descadastrada com sucesso!";
             } else {
                 echo "Erro ao descadastrar a Disciplina: " . $this->conn->error;
+            }
+            $stmt->close();
+        } else {
+            echo "Erro ao preparar a consulta: " . $this->conn->error;
+        }
+    }
+
+    public function excluirAvaliacao($id) {
+        $sql = "DELETE FROM avaliacoes WHERE id = ?";
+        
+        if ($stmt = $this->conn->prepare($sql)) {
+            $stmt->bind_param("i", $id);
+            if ($stmt->execute()) {
+                echo "Avaliação descadastrada com sucesso!";
+            } else {
+                echo "Erro ao descadastrar a avalição: " . $this->conn->error;
             }
             $stmt->close();
         } else {
