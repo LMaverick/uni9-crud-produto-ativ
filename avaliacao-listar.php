@@ -23,31 +23,39 @@
     </style>
 </head>
 <body>
-    <h1>Lista de Disciplinas</h1>
+    <h1>Lista de Alunos</h1>
 
     <?php
     // Incluir o arquivo com a classe Escola
     require_once 'db.php';
     $escola = new Escola();
-    $disciplina = $escola->listarDisciplinas();
+    $avaliacoes = $escola->listarAvaliacoes();
 
-    if (count($disciplina) > 0): ?>
+    if (count($avaliacoes) > 0): ?>
         <table>
             <thead>
                 <tr>
-                <th>ID</th>
-                    <th>Materia</th>
-                    <th>Carga horaria</th>
+                    <th>ID</th>
+                    <th>ID do aluno</th>
+                    <th>ID da disciplina</th>
+                    <th>Nota</th>
+                    <th>Data da avaliação</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($disciplina as $disciplina): ?>
+                <?php foreach ($avaliacoes as $avaliacao): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($disciplina['id']); ?></td>
-                        <td>                          
-                                <?php echo htmlspecialchars($disciplina['nome']); ?> 
+                        <td><?php echo htmlspecialchars($avaliacao['id']); ?></td>
+                        <td><?php echo htmlspecialchars($avaliacao['aluno_id']); ?></td>
+                        <td><?php echo htmlspecialchars($avaliacao['disciplina_id']); ?></td>
+                        <td><?php echo htmlspecialchars($avaliacao['nota']); ?></td>
+                        <td>
+                         <?php
+                             $dataAvaliacao = new DateTime($avaliacao['data_avaliacao']);
+                                 echo htmlspecialchars($dataAvaliacao->format('d/m/Y'));
+                        ?>
                         </td>
-                        <td><?php echo htmlspecialchars($disciplina['carga_horaria']); ?></td>
+
                     </tr>
                 <?php endforeach; ?>
             </tbody>

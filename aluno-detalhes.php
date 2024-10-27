@@ -59,7 +59,12 @@
                         <tr>
                             <td><?php echo htmlspecialchars($avaliacao['disciplina']); ?></td>
                             <td><?php echo htmlspecialchars($avaliacao['nota']); ?></td>
-                            <td><?php echo htmlspecialchars($avaliacao['data_avaliacao']); ?></td>
+                            <td>
+                         <?php
+                             $dataAvaliacao = new DateTime($avaliacao['data_avaliacao']);
+                                 echo htmlspecialchars($dataAvaliacao->format('d/m/Y'));
+                        ?>
+                        </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

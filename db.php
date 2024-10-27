@@ -98,6 +98,21 @@ class Escola {
         }
     }
 
+    public function listarAvaliacoes() {
+        $sql = "SELECT * FROM avaliacoes";
+        $result = $this->conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $avaliacoes = [];
+            while ($row = $result->fetch_assoc()) {
+                $avaliacoes[] = $row;
+            }
+            return $avaliacoes;
+        } else {
+            return [];
+        }
+    }
+
     public function listarAvaliacoesAluno($id_aluno) {
         $sql = "
             SELECT d.nome AS disciplina, a.nota, a.data_avaliacao 
